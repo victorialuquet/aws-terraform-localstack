@@ -1,6 +1,7 @@
 # KMS key for DB secrets encryption
 resource "aws_kms_key" "db_key" {
-  description = "Key used to encrypt DB instance secrets"
+  description         = "Key used to encrypt DB instance secrets"
+  enable_key_rotation = var.kms_key_rotation
 
   tags = {
     Name = "${var.name}-kms"
@@ -32,6 +33,8 @@ resource "aws_db_instance" "postgres" {
   master_user_secret_kms_key_id = aws_kms_key.db_key.key_id
   username                      = var.username
   parameter_group_name          = var.parameter_group_name
+
+  # TODO: add storage encryption settings
 
   # Network configuration - uses existing resources
   db_subnet_group_name   = aws_db_subnet_group.rds.name

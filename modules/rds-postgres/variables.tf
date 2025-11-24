@@ -60,3 +60,9 @@ variable "skip_final_snapshot" {
   type        = bool
   default     = true
 }
+
+variable "kms_key_rotation" {
+  description = "Wether or not to enable KMS encryption key rotation"
+  type        = bool
+  default     = false
+}
