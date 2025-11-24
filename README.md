@@ -139,42 +139,17 @@ terraform plan
 
 ## 📦 Module Design
 
-Modules create subnet groups internally but accept existing subnets from parent:
+Modules should contain everything related to it's scope. Elements which are not specific to it, should be created in other modules.
 
 ```hcl
 module "rds" {
   source = "../../modules/rds-postgres"
   
   name               = "my-db"
-  security_group_ids = [aws_security_group.rds.id]
+  security_group_ids = [aws_security_group.rds.id] # Subnets are not specific to the DB, usually
   database_name      = "mydb"
-  
-  # Module creates subnet group using these subnets
-  # Pass subnets via aws_subnet resources
 }
 ```
-
-> [!NOTE]
-> Subnet groups are created inside modules but reference subnets passed from the environment.
-
-## 🔌 Connecting to Services
-
-```bash
-# Get endpoints
-terraform output
-
-# PostgreSQL
-psql -h <rds_address> -p 5432 -U admin -d leddb
-
-# Redis
-redis-cli -h <redis_endpoint> -p 6379
-```
-
-> [!TIP]
-> RDS passwords are auto-generated and stored in AWS Secrets Manager. Retrieve with:
-> ```bash
-> aws secretsmanager get-secret-value --secret-id <secret-arn>
-> ```
 
 ## 🛠️ Common Commands
 
@@ -186,9 +161,9 @@ terraform output                            # Show outputs
 terraform destroy                           # Destroy everything
 ```
 
-## 🎯 Using Existing VPC
+## 🎯 Using Existing VPC/Subnets
 
-Already have a VPC? Just modify `network.tf`:
+Already have a VPC/Subnets? Just modify `network.tf`:
 
 ```hcl
 data "aws_vpc" "existing" {
@@ -226,17 +201,6 @@ terraform destroy
 ```bash
 docker ps | grep localstack
 docker run -d -p 4566:4566 localstack/localstack
-```
-
-**Bucket doesn't exist?**
-```bash
-cd environments/localstack && ./setup.sh
-```
-
-**Module not found?**
-```bash
-# Make sure you're in an environment directory
-cd environments/localstack  # or prod
 ```
 
 ## 💡 Tips
