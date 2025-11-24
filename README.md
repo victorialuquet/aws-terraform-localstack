@@ -1,4 +1,4 @@
-# 🗄️ LED AWS Terraform Infrastructure
+# 🗄️ AWS Terraform w/ LocalStack
 
 Modular Terraform setup for RDS PostgreSQL and ElastiCache Redis with support for LocalStack and AWS.
 
