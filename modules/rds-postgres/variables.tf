@@ -13,11 +13,6 @@ variable "security_group_ids" {
   type        = list(string)
 }
 
-variable "database_name" {
-  description = "Name of the database to create"
-  type        = string
-}
-
 variable "username" {
   description = "Master username for the database"
   type        = string

@@ -2,10 +2,9 @@
 module "rds" {
   source = "../../modules/rds"
 
-  name                 = "led-postgres"
+  name                 = "led-pg"
   db_subnet_group_name = aws_db_subnet_group.rds.name
   security_group_ids   = [aws_security_group.rds.id]
-  database_name        = "leddb"
   username             = "admin"
   instance_class       = "db.t3.micro"
   skip_final_snapshot  = true

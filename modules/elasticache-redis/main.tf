@@ -4,7 +4,7 @@ resource "aws_elasticache_subnet_group" "redis" {
   subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id]
 
   tags = {
-    Name = "LED Redis Subnet Group"
+    Name = "${upper(var.name)} Redis Subnet Group"
   }
 }
 

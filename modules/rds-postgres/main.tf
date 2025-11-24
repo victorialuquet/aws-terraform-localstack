@@ -18,12 +18,13 @@ resource "aws_db_subnet_group" "rds" {
 }
 
 # RDS PostgreSQL Instance
+# TODO: maintenance window config, etc
 resource "aws_db_instance" "postgres" {
   identifier = var.name
 
   allocated_storage             = var.allocated_storage
   apply_immediately             = var.apply_immediately
-  db_name                       = var.database_name
+  db_name                       = "${var.name}-db"
   engine                        = "postgres"
   engine_version                = var.engine_version
   instance_class                = var.instance_class

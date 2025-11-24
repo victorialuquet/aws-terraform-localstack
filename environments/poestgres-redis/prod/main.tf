@@ -2,10 +2,9 @@
 module "rds" {
   source = "../../modules/rds"
 
-  name                 = "led-postgres-prod"
+  name                 = "led-pg-prd"
   db_subnet_group_name = aws_db_subnet_group.rds.name
   security_group_ids   = [aws_security_group.rds.id]
-  database_name        = "leddb"
   username             = "admin"
 
   # Production settings
@@ -17,7 +16,7 @@ module "rds" {
 module "elasticache" {
   source = "../../modules/elasticache"
 
-  name               = "led-redis-prod"
+  name               = "led-redis-prd"
   subnet_group_name  = aws_elasticache_subnet_group.redis.name
   security_group_ids = [aws_security_group.redis.id]
 
