@@ -3,9 +3,9 @@ variable "name" {
   type        = string
 }
 
-variable "subnet_group_name" {
-  description = "Existing ElastiCache subnet group name"
-  type        = string
+variable "subnet_ids" {
+  description = "List of subnet IDs for ElastiCache subnet group"
+  type        = list(string)
 }
 
 variable "security_group_ids" {

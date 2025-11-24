@@ -8,10 +8,10 @@ resource "aws_kms_key" "db_key" {
   }
 }
 
-# Network config for RDS
+# DB Subnet Group
 resource "aws_db_subnet_group" "rds" {
   name       = "${var.name}-db-subnet-group"
-  subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+  subnet_ids = var.subnet_ids
 
   tags = {
     Name = "${upper(var.name)} DB Subnet Group"
@@ -36,7 +36,7 @@ resource "aws_db_instance" "postgres" {
 
   # TODO: add storage encryption settings
 
-  # Network configuration - uses existing resources
+  # Network configuration
   db_subnet_group_name   = aws_db_subnet_group.rds.name
   vpc_security_group_ids = var.security_group_ids
   publicly_accessible    = var.publicly_accessible

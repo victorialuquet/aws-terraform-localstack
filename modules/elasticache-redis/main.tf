@@ -1,10 +1,10 @@
-# Network Config
+# ElastiCache Subnet Group
 resource "aws_elasticache_subnet_group" "redis" {
-  name       = "led-redis-subnet-group"
-  subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+  name       = "${var.name}-subnet-group"
+  subnet_ids = var.subnet_ids
 
   tags = {
-    Name = "${upper(var.name)} Redis Subnet Group"
+    Name = "${upper(var.name)} Subnet Group"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_elasticache_cluster" "redis" {
   parameter_group_name = var.parameter_group_name
   port                 = 6379
 
-  # Network configuration - uses existing resources
+  # Network configuration
   subnet_group_name  = aws_elasticache_subnet_group.redis.name
   security_group_ids = var.security_group_ids
 

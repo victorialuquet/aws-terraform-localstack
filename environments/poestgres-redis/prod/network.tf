@@ -30,6 +30,26 @@ resource "aws_subnet" "private_2" {
   }
 }
 
+# DB Subnet Group for RDS
+resource "aws_db_subnet_group" "rds" {
+  name       = "led-db-subnet-group-prod"
+  subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+
+  tags = {
+    Name = "LED DB Subnet Group - Production"
+  }
+}
+
+# ElastiCache Subnet Group for Redis
+resource "aws_elasticache_subnet_group" "redis" {
+  name       = "led-redis-subnet-group-prod"
+  subnet_ids = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+
+  tags = {
+    Name = "LED Redis Subnet Group - Production"
+  }
+}
+
 # Security Group for RDS
 resource "aws_security_group" "rds" {
   name        = "led-rds-sg-prod"

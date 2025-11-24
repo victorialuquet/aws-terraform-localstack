@@ -1,25 +1,25 @@
 # RDS Module
 module "rds" {
-  source = "../../modules/rds"
+  source = "../../../modules/rds-postgres"
 
-  name                 = "led-pg-prd"
-  db_subnet_group_name = aws_db_subnet_group.rds.name
-  security_group_ids   = [aws_security_group.rds.id]
-  username             = "admin"
+  name               = "led-pg-prd"
+  subnet_ids         = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+  security_group_ids = [aws_security_group.rds.id]
+  username           = "admin"
 
-  # Production settings
+  # Cloud settings
   instance_class      = "db.t3.small"
   skip_final_snapshot = false
 }
 
 # ElastiCache Module
 module "elasticache" {
-  source = "../../modules/elasticache"
+  source = "../../../modules/elasticache-redis"
 
   name               = "led-redis-prd"
-  subnet_group_name  = aws_elasticache_subnet_group.redis.name
+  subnet_ids         = [aws_subnet.private_1.id, aws_subnet.private_2.id]
   security_group_ids = [aws_security_group.redis.id]
 
-  # Production settings
+  # Cloud settings
   node_type = "cache.t3.small"
 }
