@@ -1,6 +1,6 @@
 # RDS Module
 module "rds" {
-  source = "../../modules/rds"
+  source = "../../../modules/rds-postgres"
 
   name                 = "led-pg"
   db_subnet_group_name = aws_db_subnet_group.rds.name
@@ -12,7 +12,7 @@ module "rds" {
 
 # ElastiCache Module
 module "elasticache" {
-  source = "../../modules/elasticache"
+  source = "../../../modules/elasticache-redis"
 
   name               = "led-redis"
   subnet_group_name  = aws_elasticache_subnet_group.redis.name
